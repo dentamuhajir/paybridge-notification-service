@@ -13,3 +13,7 @@ sqlx = { version = "0.7", features = ["runtime-async-std-native-tls", "postgres"
 
 # Dotenv support
 dotenvy = "0.15"
+
+# Add these
+tokio = { version = "1", features = ["full"] }      # Async runtime
+anyhow = "1"                                        # Error handling
