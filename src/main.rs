@@ -5,7 +5,6 @@ use anyhow::Result;
 use crate::domain::health::routes::check_db;
 use crate::infrastructure::{config::Config, db::create_pool};
 
-// Replace with your crate name if different
 mod domain;
 mod infrastructure;
 
@@ -23,21 +22,29 @@ async fn health_handler(state: web::Data<AppState>) -> impl Responder {
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Load config and initialize DB
     let config = Config::load();
     let pool = create_pool(&config).await?;
     let app_state = AppState {
         db_pool: Arc::new(pool),
     };
 
-    HttpServer::new(move || {
+    println!("Starting Paybridge Notification Service...");
+    println!("Server running at http://127.0.0.1:8082");
+
+    let server = HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(app_state.clone()))
-            .route("/health", web::get().to(health_handler))
-        // Add other routes here as needed
+            .route("/healthdb", web::get().to(health_handler))
     })
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await?;
+        .bind(("127.0.0.1", 8082))?
+        .run();
 
+    // Wait for shutdown
+    let result = server.await;
+
+    println!("Server stopped.");
+
+    result?;
     Ok(())
 }
