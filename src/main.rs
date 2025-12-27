@@ -1,4 +1,3 @@
-use std::env;
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use std::sync::Arc;
 use anyhow::Result;
