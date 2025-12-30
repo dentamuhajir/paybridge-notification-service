@@ -1,5 +1,5 @@
 [package]
-name = "paybridge_guard_service"
+name = "paybridge_notification_service"
 version = "0.1.0"
 edition = "2021"
 
