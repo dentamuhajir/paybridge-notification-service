@@ -6,7 +6,7 @@ use anyhow::Result;
 pub trait EmailSender: Send + Sync {
 
     /// Sends an email.
-    ///
+    ///s
     /// # Arguments
     /// * &self    - An instance method that borrows the struct implementing this trait.
     /// * to       - A string slice representing the recipient's address.
